@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/corner">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/black_100"
+        android:gravity="center">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyle"
+            android:layout_margin="@dimen/text_margin"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retry_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            android:textStyle="bold"
+            android:textColor="@color/white_100"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:paddingTop="@dimen/standard_10"
+            android:paddingBottom="@dimen/standard_10"
+            android:backgroundTint="@color/pink"
+            app:cornerRadius="@dimen/text_margin"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/error_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_try_again"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/standard_10"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>
