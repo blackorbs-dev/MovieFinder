@@ -7,7 +7,6 @@
         <item name="colorOnPrimary">@color/black_400</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.MovieFinder" parent="Base.Theme.MovieFinder" />

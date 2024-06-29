@@ -13,5 +13,7 @@ data class Movie (
     val Genre: String?,
     val Plot: String?,
     val Actors: String?,
-    val Director: String?
+    val Director: String?,
+    val Runtime: String?,
+    val imdbRating: String?
 )

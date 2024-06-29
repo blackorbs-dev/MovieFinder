@@ -89,6 +89,10 @@ class MoviePage: Fragment() {
                 error(placeholder)
             }
             title.text = movie.Title
+            movie.Runtime?.let {
+                runtime.text = StringBuilder(it).append(if(it.contains("min"))"utes" else "")
+            }
+            rating.text = getString(R.string.rating, movie.imdbRating)
             date.text = movie.Released
             genre.text = movie.Genre
             plot.text = movie.Plot
