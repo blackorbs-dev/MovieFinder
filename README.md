@@ -8,4 +8,4 @@ object NetworkModule {
 
 Find Movies from OMDb Database (https://www.omdbapi.com)
 
-App utilises: Jetpack Navigation Component, Dagger Hilt, Retrofit, Room, Pagination 3, Clean Architecture Pattern
+App utilises: Jetpack Navigation Component, Dagger Hilt, Retrofit, Room, Kotlin Coroutine, Pagination, Clean Architecture Pattern
