@@ -17,14 +17,16 @@
 package blackorbs.dev.moviefinder.ui.moviescreen
 
 import android.content.Context
+import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
+import androidx.core.text.color
 import blackorbs.dev.moviefinder.R
 
 
 internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : androidx.appcompat.widget.AppCompatTextView(context!!, attrs, defStyleAttr){
 
-    private val defaultTrimLength = 200
+    private val defaultTrimLength = 500
 
     private var originalText: CharSequence? = null
     private var trimmedText: CharSequence? = null
@@ -58,7 +60,7 @@ internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defSt
 
     private fun getTrimmedText(): CharSequence {
         return if (originalText != null && originalText!!.length > trimLength) {
-            SpannableStringBuilder(originalText, 0, trimLength + 1).append(context.getString(R.string.ellipsis))
+            SpannableStringBuilder(originalText, 0, trimLength + 1).color(Color.WHITE){ append(context.getString(R.string.ellipsis))}
         }
         else originalText ?: "N/A"
     }
