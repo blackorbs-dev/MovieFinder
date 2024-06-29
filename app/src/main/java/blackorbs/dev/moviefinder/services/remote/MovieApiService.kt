@@ -22,7 +22,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieService {
+interface MovieApiService {
     @GET(".")
     suspend fun getMovies(@Query("s") searchQuery: String, @Query("page") page: String): MovieList
 

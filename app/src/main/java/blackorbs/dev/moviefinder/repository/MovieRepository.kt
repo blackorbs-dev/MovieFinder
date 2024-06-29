@@ -37,7 +37,7 @@ class MovieRepository @Inject constructor(private val remoteDataSource: RemoteDa
 
     fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>> = Pager(
         config = PagingConfig(pageSize = 10, prefetchDistance = 5, initialLoadSize = 10, enablePlaceholders = false),
-        pagingSourceFactory = { MoviePagingSource(searchQuery, remoteDataSource.movieService, localDatabase) }
+        pagingSourceFactory = { MoviePagingSource(searchQuery, remoteDataSource.movieApiService, localDatabase) }
     ).liveData
 
 }

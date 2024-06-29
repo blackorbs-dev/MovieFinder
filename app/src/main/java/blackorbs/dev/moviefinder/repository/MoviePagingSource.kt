@@ -19,12 +19,12 @@ package blackorbs.dev.moviefinder.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import blackorbs.dev.moviefinder.services.local.MovieDao
-import blackorbs.dev.moviefinder.services.remote.MovieService
+import blackorbs.dev.moviefinder.services.remote.MovieApiService
 import blackorbs.dev.moviefinder.models.Movie
 import retrofit2.HttpException
 import java.io.IOException
 
-class MoviePagingSource(private val searchQuery: String, private val movieService: MovieService, private val localDatabase: MovieDao): PagingSource<Int, Movie>() {
+class MoviePagingSource(private val searchQuery: String, private val movieApiService: MovieApiService, private val localDatabase: MovieDao): PagingSource<Int, Movie>() {
 
     private var localData: List<Movie> = emptyList()
 
@@ -37,7 +37,7 @@ class MoviePagingSource(private val searchQuery: String, private val movieServic
             }
             if(movies.isEmpty()) {
                 if(page == 0) page = 1
-                movieService.getMovies(searchQuery,"$page").Search?.let {
+                movieApiService.getMovies(searchQuery,"$page").Search?.let {
                     movies = it.filter { movie ->
                         !localData.any {localMovie -> localMovie.imdbID == movie.imdbID}
                     }

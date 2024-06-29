@@ -62,12 +62,13 @@ class SearchPage: Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             listAdapter.loadStateFlow.collect {
-                when{
-                    it.refresh is LoadState.NotLoading -> binding!!.loading.hide()
-                    it.refresh is LoadState.Error -> {
+                when (it.refresh) {
+                    is LoadState.NotLoading -> binding!!.loading.hide()
+                    is LoadState.Error -> {
                         binding!!.loading.hide()
                         if(listAdapter.itemCount == 0) Snackbar.make(binding!!.root, getString(R.string.error_try_again), Snackbar.LENGTH_LONG).show()
                     }
+                    LoadState.Loading -> {}
                 }
             }
         }

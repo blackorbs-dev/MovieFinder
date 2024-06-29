@@ -60,7 +60,7 @@ internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defSt
         return if (originalText != null && originalText!!.length > trimLength) {
             SpannableStringBuilder(originalText, 0, trimLength + 1).append(context.getString(R.string.ellipsis))
         }
-        else { "N/A" }
+        else originalText ?: "N/A"
     }
 
 }

@@ -18,9 +18,9 @@ package blackorbs.dev.moviefinder.services.remote
 
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(val movieService: MovieService): BaseDataSource() {
+class RemoteDataSource @Inject constructor(val movieApiService: MovieApiService): BaseDataSource() {
 
     suspend fun getMovie(imdb: String) = getResult {
-        movieService.getMovie(imdb)
+        movieApiService.getMovie(imdb)
     }
 }

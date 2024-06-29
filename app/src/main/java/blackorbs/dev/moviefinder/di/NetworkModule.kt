@@ -1,9 +1,7 @@
 package blackorbs.dev.moviefinder.di
 
-import blackorbs.dev.moviefinder.services.remote.MovieService
+import blackorbs.dev.moviefinder.services.remote.MovieApiService
 import blackorbs.dev.moviefinder.services.remote.RemoteDataSource
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,27 +16,23 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    private const val API_KEY = "" //TODO: add api key
+
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson) : Retrofit = Retrofit.Builder()
+    fun provideMovieService() : MovieApiService = Retrofit.Builder()
         .baseUrl("https://www.omdbapi.com/")
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .client(client).build()
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(client).build().create(MovieApiService::class.java)
 
     private val client get() = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
         val request = chain.request().newBuilder()
-        request.url(chain.request().url.newBuilder().addQueryParameter("apikey", "4640c4b1").build())
+        request.url(chain.request().url.newBuilder().addQueryParameter("apikey", API_KEY).build())
         chain.proceed(request.build())
     }).build()
 
-    @Provides
-    fun provideGson(): Gson = GsonBuilder().create()
-
-    @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
-
     @Singleton
     @Provides
-    fun provideRemoteDataSource(movieService: MovieService): RemoteDataSource = RemoteDataSource(movieService)
+    fun provideRemoteDataSource(movieApiService: MovieApiService): RemoteDataSource = RemoteDataSource(movieApiService)
 
 }

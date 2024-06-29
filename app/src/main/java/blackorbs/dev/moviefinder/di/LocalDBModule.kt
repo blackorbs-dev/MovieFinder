@@ -16,9 +16,9 @@ object LocalDBModule {
 
     @Singleton
     @Provides
-    fun localDB(@ApplicationContext context: Context): LocalDatabase = LocalDatabase.getLocalDB(context)
+    fun provideLocalDB(@ApplicationContext context: Context): LocalDatabase = LocalDatabase.getLocalDB(context)
 
     @Singleton
     @Provides
-    fun movieDao(localDB: LocalDatabase): MovieDao = localDB.movieDao()
+    fun provideMovieDao(localDB: LocalDatabase): MovieDao = localDB.movieDao()
 }
