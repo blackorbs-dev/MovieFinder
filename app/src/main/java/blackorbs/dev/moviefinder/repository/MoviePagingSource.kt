@@ -29,15 +29,18 @@ class MoviePagingSource(private val searchQuery: String, private val movieServic
     private var localData: List<Movie> = emptyList()
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
-        val page = params.key ?: 1
+        var page = params.key ?: 0
         return try {
             var movies: List<Movie> = emptyList()
-            if(page == 1) {
+            if(page == 0) {
                 movies = localDatabase.getMovies(searchQuery).also { localData = it }
             }
-            if(movies.isEmpty()) movieService.getMovies(searchQuery,"$page").Search?.let {
-                movies = it.filter { movie ->
-                    !localData.contains(movie)
+            if(movies.isEmpty()) {
+                if(page == 0) page = 1
+                movieService.getMovies(searchQuery,"$page").Search?.let {
+                    movies = it.filter { movie ->
+                        !localData.any {localMovie -> localMovie.imdbID == movie.imdbID}
+                    }
                 }
             }
             LoadResult.Page(movies, null, if(movies.isEmpty()) null else page+1)

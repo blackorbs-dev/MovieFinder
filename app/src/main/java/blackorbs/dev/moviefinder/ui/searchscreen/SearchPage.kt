@@ -25,7 +25,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import blackorbs.dev.moviefinder.R
 import blackorbs.dev.moviefinder.databinding.FragmentSearchBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -60,7 +62,13 @@ class SearchPage: Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             listAdapter.loadStateFlow.collect {
-                if(it.refresh is LoadState.NotLoading) binding!!.loading.hide()
+                when{
+                    it.refresh is LoadState.NotLoading -> binding!!.loading.hide()
+                    it.refresh is LoadState.Error -> {
+                        binding!!.loading.hide()
+                        if(listAdapter.itemCount == 0) Snackbar.make(binding!!.root, getString(R.string.error_try_again), Snackbar.LENGTH_LONG).show()
+                    }
+                }
             }
         }
         binding!!.searchBar.setOnQueryTextListener(object : OnQueryTextListener{
