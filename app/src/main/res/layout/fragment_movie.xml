@@ -196,25 +196,21 @@
                 app:layout_constraintEnd_toEndOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/director_title"/>
 
-            <View
-                android:id="@+id/blur_back"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@color/blur_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:visibility="gone"/>
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="title,runtime,rating,date_title,date,genre_title,genre,plot_title,plot,actors_title,actors,director_title,director"/>
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                tools:visibility="visible"
                 android:background="@drawable/all_round_corner"
-                app:indicatorColor="@color/white_100"
+                app:indicatorColor="@color/pink"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

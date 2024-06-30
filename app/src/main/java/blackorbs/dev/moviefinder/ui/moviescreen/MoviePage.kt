@@ -58,8 +58,8 @@ class MoviePage: Fragment() {
             when(it.status){
                 Resource.Status.SUCCESS -> {
                     it.data?.let {
-                            movie -> bindData(movie)
-                        binding!!.blurBack.visibility = View.GONE
+                        movie -> bindData(movie)
+                        binding!!.group.visibility = View.VISIBLE
                         binding!!.loading.hide()
                     }
                 }
@@ -74,7 +74,6 @@ class MoviePage: Fragment() {
                 }
 
                 Resource.Status.LOADING -> {
-                    binding!!.blurBack.visibility = View.VISIBLE
                     binding!!.loading.show()
                 }
             }

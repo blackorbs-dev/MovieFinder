@@ -71,7 +71,7 @@
         android:visibility="invisible"
         tools:visibility="visible"
         android:background="@drawable/all_round_corner"
-        app:indicatorColor="@color/white_100"
+        app:indicatorColor="@color/pink"
         app:layout_constraintStart_toStartOf="@+id/movies_list"
         app:layout_constraintEnd_toEndOf="@+id/movies_list"
         app:layout_constraintTop_toTopOf="@+id/movies_list"

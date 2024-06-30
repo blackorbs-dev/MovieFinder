@@ -20,7 +20,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/text_margin"
-    android:layout_marginBottom="@dimen/text_margin"
     app:cardCornerRadius="@dimen/corner">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -45,13 +44,11 @@
             android:text="@string/retry"
             android:textStyle="bold"
             android:textColor="@color/white_100"
-            android:textAllCaps="true"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_marginTop="@dimen/text_margin"
             android:paddingTop="@dimen/standard_10"
             android:paddingBottom="@dimen/standard_10"
-            android:backgroundTint="@color/pink"
-            app:cornerRadius="@dimen/text_margin"/>
+            android:backgroundTint="@color/pink"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/error_msg"
@@ -60,6 +57,7 @@
             android:text="@string/error_try_again"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="@color/white_100"
             android:gravity="center_horizontal"
             android:padding="@dimen/standard_10"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
