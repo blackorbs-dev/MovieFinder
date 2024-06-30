@@ -36,26 +36,23 @@ class SearchPage: Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
     private var binding: FragmentSearchBinding? = null
+    private val listAdapter = ListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if(binding == null) {
             binding = FragmentSearchBinding.inflate(inflater)
+            initPage()
         }
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPage()
+        setUpObservers()
     }
 
-    private fun initPage() {
-        val listAdapter = ListAdapter()
-        binding!!.moviesList.apply {
-            setHasFixedSize(true)
-            adapter = listAdapter.withLoadStateFooter(ListLoadStateAdapter { listAdapter.retry() })
-        }
-        searchViewModel.movies.observe(requireActivity()){
+    private fun setUpObservers(){
+        searchViewModel.movies.observe(viewLifecycleOwner){
             viewLifecycleOwner.lifecycleScope.launch {
                 listAdapter.submitData(it)
             }
@@ -71,6 +68,13 @@ class SearchPage: Fragment() {
                     LoadState.Loading -> {}
                 }
             }
+        }
+    }
+
+    private fun initPage() {
+        binding!!.moviesList.apply {
+            setHasFixedSize(true)
+            adapter = listAdapter.withLoadStateFooter(ListLoadStateAdapter { listAdapter.retry() })
         }
         binding!!.searchBar.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

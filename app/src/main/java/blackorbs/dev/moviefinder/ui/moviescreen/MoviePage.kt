@@ -38,26 +38,27 @@ class MoviePage: Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()
     private var binding: FragmentMovieBinding? = null
+    private var imdb: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if(binding==null){
             binding = FragmentMovieBinding.inflate(inflater)
+            initPage()
         }
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPage()
+        setUpObserver()
     }
 
-    private fun initPage(){
-        val imdb = arguments?.getString(ListAdapter.IMDB_KEY)?.apply { movieViewModel.getMovie(this) }
-        movieViewModel.movie.observe(requireActivity()){
+    private fun setUpObserver(){
+        movieViewModel.movie.observe(viewLifecycleOwner){
             when(it.status){
                 Resource.Status.SUCCESS -> {
                     it.data?.let {
-                        movie -> bindData(movie)
+                            movie -> bindData(movie)
                         binding!!.blurBack.visibility = View.GONE
                         binding!!.loading.hide()
                     }
@@ -78,6 +79,10 @@ class MoviePage: Fragment() {
                 }
             }
         }
+    }
+
+    private fun initPage(){
+        imdb = arguments?.getString(ListAdapter.IMDB_KEY)?.apply { movieViewModel.getMovie(this) }
         binding!!.backBtn.setOnClickListener { findNavController().popBackStack() }
     }
 
@@ -89,10 +94,10 @@ class MoviePage: Fragment() {
                 error(placeholder)
             }
             title.text = movie.Title
-            movie.Runtime?.let {
-                runtime.text = StringBuilder(it).append(if(it.contains("min"))"utes" else "")
-            }
-            rating.text = getString(R.string.rating, movie.imdbRating)
+            runtime.text = if(movie.Runtime?.equals("N/A") == true) movie.Runtime else getString(R.string.runtime,
+                movie.Runtime?.split(" ", limit = 2)?.first() ?: "N/A"
+            )
+            rating.text = if(movie.imdbRating?.equals("N/A") == true) movie.imdbRating else getString(R.string.rating, movie.imdbRating)
             date.text = movie.Released
             genre.text = movie.Genre
             plot.text = movie.Plot

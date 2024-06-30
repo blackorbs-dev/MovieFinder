@@ -9,6 +9,7 @@
     <string name="directed_by">Directed by</string>
     <string name="ellipsis">… read more</string>
     <string name="title">%1$s (%2$s)</string>
+    <string name="runtime">%1$s minutes</string>
     <string name="retry">Retry</string>
     <string name="rating">%1$s/10 (IMDb)</string>
     <string name="error_try_again">Something went wrong, please check your internet connection and try again</string>
