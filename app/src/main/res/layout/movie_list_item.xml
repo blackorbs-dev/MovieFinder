@@ -43,6 +43,7 @@
         android:padding="@dimen/standard_5"
         android:gravity="center_horizontal"
         android:textStyle="bold"
-        android:textColor="@color/black_400"
+        android:textSize="16sp"
+        android:textColor="@color/white_100"
         tools:text="49 Days (2019)"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

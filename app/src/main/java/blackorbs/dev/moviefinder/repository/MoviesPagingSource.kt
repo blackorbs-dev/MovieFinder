@@ -33,9 +33,9 @@ class MoviesPagingSource(private val searchQuery: String, private val movieApiSe
         return try {
             var movies: List<Movie> = emptyList()
             if(page == 0) {
-                movies = localDatabase.getMovies(searchQuery).reversed().also { localData = it }
+                movies = (if(searchQuery.isEmpty()) localDatabase.getAll() else localDatabase.getMovies(searchQuery)).reversed().also { localData = it }
             }
-            if(movies.isEmpty()) {
+            if(movies.isEmpty() && searchQuery.isNotEmpty()) {
                 if(page == 0) page = 1
                 movieApiService.getMovies(searchQuery,"$page").Search?.let {
                     movies = it.filter { movie ->

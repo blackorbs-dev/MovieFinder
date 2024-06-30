@@ -27,15 +27,12 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(movie: Movie)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<Movie>)
-
     @Query("SELECT * FROM movies WHERE imdbID=:imdb")
     fun getMovie(imdb: String): List<Movie>
 
     @Query("SELECT * FROM movies WHERE Title LIKE '%' || :searchQuery || '%'")
     suspend fun getMovies(searchQuery:String): List<Movie>
 
-    @Query("Delete From movies")
-    suspend fun clearAllMovies()
+    @Query("SELECT * FROM movies")
+    suspend fun getAll(): List<Movie>
 }

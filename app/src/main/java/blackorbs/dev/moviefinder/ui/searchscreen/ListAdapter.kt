@@ -16,10 +16,13 @@
 
 package blackorbs.dev.moviefinder.ui.searchscreen
 
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.text.color
 import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
@@ -66,8 +69,8 @@ class ListAdapter: PagingDataAdapter<Movie, ListAdapter.ViewHolder>(diffCallback
                                 bundleOf(IMDB_KEY to movie.imdbID)
                             )
                     }
+                    title.text = SpannableStringBuilder(movie.Title).color(ContextCompat.getColor(root.context, R.color.black_400)){append(" (${movie.Year})")}
                 }
-                title.text = root.context.getString(R.string.title, movie?.Title, movie?.Year)
             }
         }
     }

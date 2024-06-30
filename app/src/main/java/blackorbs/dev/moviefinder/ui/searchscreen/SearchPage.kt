@@ -78,11 +78,7 @@ class SearchPage: Fragment() {
         }
         binding!!.searchBar.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    binding!!.loading.show()
-                    searchViewModel.getMovies(it.trim())
-                }
-                binding!!.searchBar.clearFocus()
+                getMovies(query)
                 return true
             }
 
@@ -90,6 +86,15 @@ class SearchPage: Fragment() {
                 return false
             }
         })
+        getMovies("")
+    }
+
+    private fun getMovies(query: String?){
+        query?.let {
+            binding!!.loading.show()
+            searchViewModel.getMovies(it.trim())
+            binding!!.searchBar.clearFocus()
+        }
     }
 
 }

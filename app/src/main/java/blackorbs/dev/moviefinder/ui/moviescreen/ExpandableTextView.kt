@@ -17,33 +17,29 @@
 package blackorbs.dev.moviefinder.ui.moviescreen
 
 import android.content.Context
-import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import blackorbs.dev.moviefinder.R
 
 
 internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : androidx.appcompat.widget.AppCompatTextView(context!!, attrs, defStyleAttr){
 
-    private val defaultTrimLength = 500
-
     private var originalText: CharSequence? = null
     private var trimmedText: CharSequence? = null
     private var bufferType: BufferType? = null
-    private var trim = true
-    private var trimLength = 0
+    private var trimLength = 500
 
     constructor(context: Context?) : this(context, null)
 
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, android.R.attr.webViewStyle) {
         val typedArray = context!!.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView)
-        this.trimLength = typedArray.getInt(R.styleable.ExpandableTextView_trimLength, defaultTrimLength)
+        this.trimLength = typedArray.getInt(R.styleable.ExpandableTextView_trimLength, trimLength)
         typedArray.recycle()
+        requestFocusFromTouch()
         setOnClickListener {
-            trim = !trim
-            super.setText(getDisplayableText(), bufferType)
-            requestFocusFromTouch()
+            trimmedText?.let { super.setText(getDisplayableText(), bufferType) }
         }
     }
 
@@ -55,14 +51,14 @@ internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defSt
     }
 
     private fun getDisplayableText(): CharSequence {
-        return if (trim) trimmedText!! else originalText!!
+        return if (trimmedText == null || text.equals(trimmedText)) originalText!! else trimmedText!!
     }
 
-    private fun getTrimmedText(): CharSequence {
+    private fun getTrimmedText(): CharSequence? {
         return if (originalText != null && originalText!!.length > trimLength) {
-            SpannableStringBuilder(originalText, 0, trimLength + 1).color(Color.WHITE){ append(context.getString(R.string.ellipsis))}
+            SpannableStringBuilder(originalText, 0, trimLength + 1).color(ContextCompat.getColor(context, R.color.white_100)){ append(context.getString(R.string.ellipsis))}
         }
-        else originalText ?: "N/A"
+        else null
     }
 
 }
