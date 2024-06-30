@@ -48,8 +48,7 @@
 
     <style name="SnackbarStyle" parent="ThemeOverlay.Material3.Snackbar">
         <item name="backgroundTint">@color/white_100</item>
-        <item name="android:layout_marginStart">@dimen/standard_5</item>
-        <item name="android:layout_marginEnd">@dimen/standard_5</item>
+        <item name="android:layout_margin">@dimen/standard_5</item>
         <item name="android:paddingStart">@dimen/standard_5</item>
         <item name="android:paddingEnd">@dimen/standard_5</item>
     </style>
