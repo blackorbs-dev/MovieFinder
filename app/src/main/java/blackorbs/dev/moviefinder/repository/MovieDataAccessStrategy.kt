@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package blackorbs.dev.moviefinder.services.remote
+package blackorbs.dev.moviefinder.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData

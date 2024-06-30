@@ -24,7 +24,7 @@ import blackorbs.dev.moviefinder.models.Movie
 import retrofit2.HttpException
 import java.io.IOException
 
-class MoviePagingSource(private val searchQuery: String, private val movieApiService: MovieApiService, private val localDatabase: MovieDao): PagingSource<Int, Movie>() {
+class MoviesPagingSource(private val searchQuery: String, private val movieApiService: MovieApiService, private val localDatabase: MovieDao): PagingSource<Int, Movie>() {
 
     private var localData: List<Movie> = emptyList()
 

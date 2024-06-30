@@ -24,7 +24,6 @@ import androidx.paging.liveData
 import blackorbs.dev.moviefinder.models.Movie
 import blackorbs.dev.moviefinder.services.local.MovieDao
 import blackorbs.dev.moviefinder.services.remote.RemoteDataSource
-import blackorbs.dev.moviefinder.services.remote.executeGetMovie
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDatabase: MovieDao){
@@ -37,7 +36,7 @@ class MovieRepository @Inject constructor(private val remoteDataSource: RemoteDa
 
     fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>> = Pager(
         config = PagingConfig(pageSize = 10, prefetchDistance = 5, initialLoadSize = 10, enablePlaceholders = false),
-        pagingSourceFactory = { MoviePagingSource(searchQuery, remoteDataSource.movieApiService, localDatabase) }
+        pagingSourceFactory = { MoviesPagingSource(searchQuery, remoteDataSource.movieApiService, localDatabase) }
     ).liveData
 
 }
