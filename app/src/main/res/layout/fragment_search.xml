@@ -51,7 +51,7 @@
         android:id="@+id/movies_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="GridLayoutManager"
+        app:layoutManager="StaggeredGridLayoutManager"
         android:layout_marginTop="@dimen/text_margin"
         android:paddingStart="@dimen/standard_10"
         android:paddingEnd="@dimen/standard_10"

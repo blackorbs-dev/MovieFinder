@@ -2,8 +2,7 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="corner">30dp</dimen>
-    <dimen name="image_height">140dp</dimen>
     <dimen name="standard_5">5dp</dimen>
     <dimen name="standard_10">10dp</dimen>
-    <dimen name="image_height_large">250dp</dimen>
+    <dimen name="image_height_large">300dp</dimen>
 </resources>
