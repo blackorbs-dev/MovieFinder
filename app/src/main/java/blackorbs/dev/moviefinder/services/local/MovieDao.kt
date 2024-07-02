@@ -24,15 +24,16 @@ import blackorbs.dev.moviefinder.models.Movie
 
 @Dao
 interface MovieDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(movie: Movie)
 
     @Query("SELECT * FROM movies WHERE imdbID=:imdb")
     fun getMovie(imdb: String): List<Movie>
 
-    @Query("SELECT * FROM movies WHERE Title LIKE '%' || :searchQuery || '%'")
-    suspend fun getMovies(searchQuery:String): List<Movie>
+    @Query("SELECT imdbID, Title, Poster, Year FROM movies WHERE Title LIKE '%' || :searchQuery || '%' LIMIT :limit OFFSET :page * :limit")
+    suspend fun getMovies(searchQuery:String, page: Int, limit: Int = 10): List<Movie>
 
-    @Query("SELECT * FROM movies")
-    suspend fun getAll(): List<Movie>
+    @Query("SELECT imdbID, Title, Poster, Year FROM movies LIMIT :limit OFFSET :page * :limit")
+    suspend fun getAll(page: Int, limit: Int = 10): List<Movie>
 }

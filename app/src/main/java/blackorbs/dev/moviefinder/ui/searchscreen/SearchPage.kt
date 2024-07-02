@@ -53,19 +53,30 @@ class SearchPage: Fragment() {
 
     private fun setUpObservers(){
         searchViewModel.movies.observe(viewLifecycleOwner){
-            viewLifecycleOwner.lifecycleScope.launch {
-                listAdapter.submitData(it)
-            }
+            listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
         viewLifecycleOwner.lifecycleScope.launch {
             listAdapter.loadStateFlow.collect {
                 when (it.refresh) {
-                    is LoadState.NotLoading -> binding!!.loading.hide()
+                    is LoadState.NotLoading -> {
+                        binding!!.loading.hide()
+                        when(listAdapter.itemCount){
+                            0 -> {
+                                binding!!.noResult.visibility = View.VISIBLE
+                                binding!!.noResult.text =
+                                    getString(R.string.no_results,
+                                        if(binding!!.searchBar.query.isBlank()) getString(R.string.start_search)
+                                        else getString(R.string.try_another_query)
+                                    )
+                            }
+                            else -> binding!!.noResult.visibility = View.INVISIBLE
+                        }
+                    }
                     is LoadState.Error -> {
                         binding!!.loading.hide()
                         Snackbar.make(binding!!.root, getString(R.string.error_try_again), Snackbar.LENGTH_LONG).show()
                     }
-                    LoadState.Loading -> {}
+                    LoadState.Loading -> { binding!!.loading.show() }
                 }
             }
         }
@@ -91,7 +102,6 @@ class SearchPage: Fragment() {
 
     private fun getMovies(query: String?){
         query?.let {
-            binding!!.loading.show()
             searchViewModel.getMovies(it.trim())
             binding!!.searchBar.clearFocus()
         }

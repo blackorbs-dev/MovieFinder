@@ -22,21 +22,21 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import blackorbs.dev.moviefinder.models.Movie
+import blackorbs.dev.moviefinder.models.Resource
+import blackorbs.dev.moviefinder.services.MoviesPagingSource
 import blackorbs.dev.moviefinder.services.local.MovieDao
-import blackorbs.dev.moviefinder.services.remote.RemoteDataSource
+import blackorbs.dev.moviefinder.services.remote.MovieApiService
+import blackorbs.dev.moviefinder.services.MovieDataSource
 import javax.inject.Inject
 
-class MovieRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDatabase: MovieDao){
-
-    fun getMovie(imdb: String) = executeGetMovie(
-        databaseQuery = {localDatabase.getMovie(imdb)},
-        networkCall = {remoteDataSource.getMovie(imdb)},
-        saveCallResult = { localDatabase.add(it)}
-    )
+class MovieRepository @Inject constructor(private val movieApiService: MovieApiService, private val localDatabase: MovieDao){
+    private val localData = mutableListOf<Movie>()
+    fun getMovie(imdb: String) : LiveData<Resource<Movie>> =
+        MovieDataSource(movieApiService, localDatabase).getMovie(imdb)
 
     fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>> = Pager(
-        config = PagingConfig(pageSize = 10, prefetchDistance = 5, initialLoadSize = 10, enablePlaceholders = false),
-        pagingSourceFactory = { MoviesPagingSource(searchQuery, remoteDataSource.movieApiService, localDatabase) }
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+        pagingSourceFactory = { MoviesPagingSource(searchQuery, movieApiService, localDatabase, localData) }
     ).liveData
 
 }

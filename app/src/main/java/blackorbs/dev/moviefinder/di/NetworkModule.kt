@@ -1,7 +1,6 @@
 package blackorbs.dev.moviefinder.di
 
 import blackorbs.dev.moviefinder.services.remote.MovieApiService
-import blackorbs.dev.moviefinder.services.remote.RemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +29,5 @@ object NetworkModule {
         request.url(chain.request().url.newBuilder().addQueryParameter("apikey", API_KEY).build())
         chain.proceed(request.build())
     }).build()
-
-    @Singleton
-    @Provides
-    fun provideRemoteDataSource(movieApiService: MovieApiService): RemoteDataSource = RemoteDataSource(movieApiService)
 
 }

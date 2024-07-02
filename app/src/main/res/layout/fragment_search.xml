@@ -63,6 +63,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_bar"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results"
+        style="@style/NormalTextLight"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/movies_list"
+        app:layout_constraintEnd_toEndOf="@+id/movies_list"
+        app:layout_constraintTop_toTopOf="@+id/movies_list"
+        app:layout_constraintBottom_toBottomOf="@+id/movies_list"/>
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/loading"
         android:layout_width="wrap_content"

@@ -55,9 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/error_try_again"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white_100"
+            style="@style/NormalTextLight"
             android:gravity="center_horizontal"
             android:padding="@dimen/standard_10"/>
     </androidx.appcompat.widget.LinearLayoutCompat>

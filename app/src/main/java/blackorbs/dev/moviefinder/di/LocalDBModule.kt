@@ -1,6 +1,7 @@
 package blackorbs.dev.moviefinder.di
 
 import android.content.Context
+import androidx.room.Room
 import blackorbs.dev.moviefinder.services.local.LocalDatabase
 import blackorbs.dev.moviefinder.services.local.MovieDao
 import dagger.Module
@@ -16,9 +17,9 @@ object LocalDBModule {
 
     @Singleton
     @Provides
-    fun provideLocalDB(@ApplicationContext context: Context): LocalDatabase = LocalDatabase.getLocalDB(context)
+    fun provideLocalDB(@ApplicationContext context: Context): LocalDatabase =
+        Room.databaseBuilder(context, LocalDatabase::class.java, "movies_db").build()
 
-    @Singleton
     @Provides
     fun provideMovieDao(localDB: LocalDatabase): MovieDao = localDB.movieDao()
 }

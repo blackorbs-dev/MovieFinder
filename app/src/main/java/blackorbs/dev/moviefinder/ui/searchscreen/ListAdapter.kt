@@ -64,8 +64,8 @@ class ListAdapter: PagingDataAdapter<Movie, ListAdapter.ViewHolder>(diffCallback
                         error(placeholder)
                     }
                     root.setOnClickListener {
-                        binding.root.findNavController()
-                            .navigate(R.id.action_searchPage_to_moviePage,
+                        binding.root.findNavController().navigate(
+                                R.id.action_searchPage_to_moviePage,
                                 bundleOf(IMDB_KEY to movie.imdbID)
                             )
                     }

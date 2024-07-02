@@ -2,7 +2,7 @@ package blackorbs.dev.moviefinder.di
 
 import blackorbs.dev.moviefinder.repository.MovieRepository
 import blackorbs.dev.moviefinder.services.local.MovieDao
-import blackorbs.dev.moviefinder.services.remote.RemoteDataSource
+import blackorbs.dev.moviefinder.services.remote.MovieApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +15,7 @@ object MainModule {
 
     @Singleton
     @Provides
-    fun provideRepository(remoteDataSource: RemoteDataSource, localDatabase: MovieDao) = MovieRepository(remoteDataSource, localDatabase)
+    fun provideRepository(movieApiService: MovieApiService, localDatabase: MovieDao) =
+        MovieRepository(movieApiService, localDatabase)
 
 }

@@ -1,16 +1,18 @@
 <resources>
     <string name="app_name">Movie Finder (blackorbs)</string>
     <string name="find_movies">Explore millions of Movies, TV Series, Games and more</string>
-    <string name="search_here">Search here…</string>
+    <string name="search_here">Enter title to search…</string>
     <string name="release_date">Released Date</string>
     <string name="genre">Genre</string>
     <string name="plot">Plot</string>
     <string name="starring">Starring</string>
     <string name="directed_by">Directed by</string>
     <string name="ellipsis">… read more</string>
-    <string name="title">%1$s (%2$s)</string>
     <string name="runtime">%1$s minutes</string>
     <string name="retry">RETRY</string>
     <string name="rating">%1$s/10 (IMDb)</string>
+    <string name="no_results">No results found. %1$s</string>
+    <string name="start_search">Start searching</string>
+    <string name="try_another_query">Try another search</string>
     <string name="error_try_again">Something went wrong, please check your internet connection and try again</string>
 </resources>

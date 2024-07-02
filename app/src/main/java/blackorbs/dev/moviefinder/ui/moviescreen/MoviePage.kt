@@ -81,7 +81,7 @@ class MoviePage: Fragment() {
     }
 
     private fun initPage(){
-        imdb = arguments?.getString(ListAdapter.IMDB_KEY)?.apply { movieViewModel.getMovie(this) }
+        imdb = arguments?.getString(ListAdapter.IMDB_KEY)?.also { movieViewModel.getMovie(it) }
         binding!!.backBtn.setOnClickListener { findNavController().popBackStack() }
     }
 
@@ -93,8 +93,8 @@ class MoviePage: Fragment() {
                 error(placeholder)
             }
             title.text = movie.Title
-            runtime.text = if(movie.Runtime?.equals("N/A") == true) movie.Runtime else getString(R.string.runtime,
-                movie.Runtime?.split(" ", limit = 2)?.first() ?: "N/A"
+            runtime.text = if(movie.Runtime?.equals("N/A") == true) movie.Runtime else getString(
+                R.string.runtime, movie.Runtime?.split(" ", limit = 2)?.first() ?: "N/A"
             )
             rating.text = if(movie.imdbRating?.equals("N/A") == true) movie.imdbRating else getString(R.string.rating, movie.imdbRating)
             date.text = movie.Released
