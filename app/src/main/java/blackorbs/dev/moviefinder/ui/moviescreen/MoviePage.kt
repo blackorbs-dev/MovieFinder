@@ -20,15 +20,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import blackorbs.dev.moviefinder.R
 import blackorbs.dev.moviefinder.databinding.FragmentMovieBinding
 import blackorbs.dev.moviefinder.models.Movie
 import blackorbs.dev.moviefinder.models.Resource
-import blackorbs.dev.moviefinder.ui.searchscreen.ListAdapter
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +37,7 @@ class MoviePage: Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()
     private var binding: FragmentMovieBinding? = null
-    private var imdb: String? = null
+    private val args: MoviePageArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if(binding==null){
@@ -67,10 +66,7 @@ class MoviePage: Fragment() {
                 Resource.Status.ERROR -> {
                     binding!!.loading.hide()
                     Snackbar.make(binding!!.root, getString(R.string.error_try_again), Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.retry){
-                            imdb?.let {id -> movieViewModel.getMovie(id) }
-                        }
-                        .show()
+                        .setAction(R.string.retry){ movieViewModel.getMovie(args.movieID) }.show()
                 }
 
                 Resource.Status.LOADING -> {
@@ -81,17 +77,13 @@ class MoviePage: Fragment() {
     }
 
     private fun initPage(){
-        imdb = arguments?.getString(ListAdapter.IMDB_KEY)?.also { movieViewModel.getMovie(it) }
         binding!!.backBtn.setOnClickListener { findNavController().popBackStack() }
+        movieViewModel.getMovie(args.movieID)
     }
 
     private fun bindData(movie: Movie){
         with(binding!!){
-            image.load(movie.Poster){
-                val placeholder = AppCompatResources.getDrawable(root.context, R.drawable.placeholder)
-                placeholder(placeholder)
-                error(placeholder)
-            }
+            image.load(movie.Poster){ error(R.drawable.placeholder) }
             title.text = movie.Title
             runtime.text = if(movie.Runtime?.equals("N/A") == true) movie.Runtime else getString(
                 R.string.runtime, movie.Runtime?.split(" ", limit = 2)?.first() ?: "N/A"

@@ -16,7 +16,6 @@
 
 package blackorbs.dev.moviefinder.services
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import blackorbs.dev.moviefinder.models.Movie
@@ -25,12 +24,13 @@ import blackorbs.dev.moviefinder.services.local.MovieDao
 import blackorbs.dev.moviefinder.services.remote.MovieApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import java.io.IOException
 import retrofit2.HttpException
+import timber.log.Timber
+import java.io.IOException
 
-class MovieDataSource(private val movieApiService: MovieApiService, private val localDatabase: MovieDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+open class MovieDataSource(private val movieApiService: MovieApiService, private val localDatabase: MovieDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
-    fun getMovie(imdb: String) : LiveData<Resource<Movie>> = liveData(ioDispatcher) {
+    open fun getMovie(imdb: String) : LiveData<Resource<Movie>> = liveData(ioDispatcher) {
         emit(Resource.loading())
         val cachedData = localDatabase.getMovie(imdb).apply { if(isNotEmpty()) emit(Resource.success(first())) }
         try {
@@ -42,20 +42,16 @@ class MovieDataSource(private val movieApiService: MovieApiService, private val 
                     return@liveData
                 }
             }
-            emit(error(" ${response.code()} ${response.message()}"))
+            if(cachedData.isEmpty()) emit(error(" ${response.code()} ${response.message()}"))
         } catch (e: IOException) {
-            if(cachedData.isEmpty()) {
-                emit(error(e.message ?: e.toString()))
-            }
+            if(cachedData.isEmpty()) emit(error(e.message ?: e.toString()))
         } catch (e: HttpException) {
-            if(cachedData.isEmpty()) {
-                emit(error(e.message ?: e.toString()))
-            }
+            if(cachedData.isEmpty()) emit(error(e.message ?: e.toString()))
         }
     }
 
-    private fun error(message: String): Resource<Movie> {
-        Log.e("movieDataSource", message)
+    open fun error(message: String): Resource<Movie> {
+        Timber.e(message)
         return Resource.error(message)
     }
 }

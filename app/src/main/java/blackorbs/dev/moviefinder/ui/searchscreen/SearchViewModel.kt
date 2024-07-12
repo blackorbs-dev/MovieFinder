@@ -23,13 +23,13 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import blackorbs.dev.moviefinder.repository.MovieRepository
 import blackorbs.dev.moviefinder.models.Movie
+import blackorbs.dev.moviefinder.repository.BaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val movieRepo: MovieRepository) : ViewModel() {
+class SearchViewModel @Inject constructor(private val movieRepo: BaseRepository) : ViewModel() {
 
     private val _searchQuery = MutableLiveData<String>()
     private val _movies = _searchQuery.switchMap { movieRepo.getMovies(it) }

@@ -14,7 +14,6 @@
 
     <style name="Theme.MovieFinder" parent="Base.Theme.MovieFinder" />
 
-
     <style name="Theme.MovieFinder.SplashScreen" parent="Theme.SplashScreen">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/black</item>

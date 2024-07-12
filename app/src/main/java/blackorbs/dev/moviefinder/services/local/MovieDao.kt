@@ -29,7 +29,7 @@ interface MovieDao {
     suspend fun add(movie: Movie)
 
     @Query("SELECT * FROM movies WHERE imdbID=:imdb")
-    fun getMovie(imdb: String): List<Movie>
+    suspend fun getMovie(imdb: String): List<Movie>
 
     @Query("SELECT imdbID, Title, Poster, Year FROM movies WHERE Title LIKE '%' || :searchQuery || '%' LIMIT :limit OFFSET :page * :limit")
     suspend fun getMovies(searchQuery:String, page: Int, limit: Int = 10): List<Movie>

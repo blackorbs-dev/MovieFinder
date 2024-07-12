@@ -65,7 +65,7 @@ class SearchPage: Fragment() {
                                 binding!!.noResult.visibility = View.VISIBLE
                                 binding!!.noResult.text =
                                     getString(R.string.no_results,
-                                        if(binding!!.searchBar.query.isBlank()) getString(R.string.start_search)
+                                        if(binding!!.movieSearchBar.query.isBlank()) getString(R.string.start_search)
                                         else getString(R.string.try_another_query)
                                     )
                             }
@@ -76,7 +76,7 @@ class SearchPage: Fragment() {
                         binding!!.loading.hide()
                         Snackbar.make(binding!!.root, getString(R.string.error_try_again), Snackbar.LENGTH_LONG).show()
                     }
-                    LoadState.Loading -> { binding!!.loading.show() }
+                    LoadState.Loading -> binding!!.loading.show()
                 }
             }
         }
@@ -87,8 +87,8 @@ class SearchPage: Fragment() {
             setHasFixedSize(true)
             adapter = listAdapter.withLoadStateFooter(ListLoadStateAdapter { listAdapter.retry() })
         }
-        binding!!.searchBar.setOnQueryTextListener(object : OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
+        binding!!.movieSearchBar.setOnQueryTextListener(object : OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
                 getMovies(query)
                 return true
             }
@@ -100,11 +100,9 @@ class SearchPage: Fragment() {
         getMovies("")
     }
 
-    private fun getMovies(query: String?){
-        query?.let {
-            searchViewModel.getMovies(it.trim())
-            binding!!.searchBar.clearFocus()
-        }
+    private fun getMovies(query: String){
+        searchViewModel.getMovies(query.trim())
+        binding!!.movieSearchBar.clearFocus()
     }
 
 }

@@ -24,7 +24,7 @@ import androidx.core.text.color
 import blackorbs.dev.moviefinder.R
 
 
-internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : androidx.appcompat.widget.AppCompatTextView(context!!, attrs, defStyleAttr){
+internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : com.google.android.material.textview.MaterialTextView(context!!, attrs, defStyleAttr){
 
     private var originalText: CharSequence? = null
     private var trimmedText: CharSequence? = null
@@ -38,9 +38,7 @@ internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defSt
         this.trimLength = typedArray.getInt(R.styleable.ExpandableTextView_trimLength, trimLength)
         typedArray.recycle()
         requestFocusFromTouch()
-        setOnClickListener {
-            trimmedText?.let { super.setText(getDisplayableText(), bufferType) }
-        }
+        setOnClickListener { trimmedText?.let { super.setText(getDisplayableText(), bufferType) } }
     }
 
     override fun setText(text: CharSequence?, type: BufferType?) {
@@ -51,12 +49,12 @@ internal class ExpandableTextView(context: Context?, attrs: AttributeSet?, defSt
     }
 
     private fun getDisplayableText(): CharSequence {
-        return if (trimmedText == null || text.equals(trimmedText)) originalText!! else trimmedText!!
+        return if (trimmedText == null || text.equals(trimmedText)) originalText?:"" else trimmedText?:""
     }
 
     private fun getTrimmedText(): CharSequence? {
         return if (originalText != null && originalText!!.length > trimLength) {
-            SpannableStringBuilder(originalText, 0, trimLength + 1).color(ContextCompat.getColor(context, R.color.white_100)){ append(context.getString(R.string.ellipsis))}
+            SpannableStringBuilder(originalText, 0, trimLength + 1).color(ContextCompat.getColor(context, R.color.white_100)){append(context.getString(R.string.ellipsis))}
         }
         else null
     }

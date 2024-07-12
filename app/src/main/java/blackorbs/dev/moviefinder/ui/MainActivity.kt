@@ -19,7 +19,7 @@ package blackorbs.dev.moviefinder.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import blackorbs.dev.moviefinder.databinding.ActivityMainBinding
+import blackorbs.dev.moviefinder.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +27,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(ActivityMainBinding.inflate(layoutInflater).root)
+        setContentView(R.layout.activity_main)
     }
 }

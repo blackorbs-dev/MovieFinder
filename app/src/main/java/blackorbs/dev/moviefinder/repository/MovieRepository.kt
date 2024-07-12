@@ -28,15 +28,22 @@ import blackorbs.dev.moviefinder.services.local.MovieDao
 import blackorbs.dev.moviefinder.services.remote.MovieApiService
 import blackorbs.dev.moviefinder.services.MovieDataSource
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository @Inject constructor(private val movieApiService: MovieApiService, private val localDatabase: MovieDao){
+@Singleton
+class MovieRepository @Inject constructor(private val movieApiService: MovieApiService, private val localDatabase: MovieDao) : BaseRepository {
     private val localData = mutableListOf<Movie>()
-    fun getMovie(imdb: String) : LiveData<Resource<Movie>> =
+    override fun getMovie(imdb: String) : LiveData<Resource<Movie>> =
         MovieDataSource(movieApiService, localDatabase).getMovie(imdb)
 
-    fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>> = Pager(
+    override fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>> = Pager(
         config = PagingConfig(pageSize = 10, enablePlaceholders = false),
         pagingSourceFactory = { MoviesPagingSource(searchQuery, movieApiService, localDatabase, localData) }
     ).liveData
 
+}
+
+interface BaseRepository {
+    fun getMovie(imdb: String) : LiveData<Resource<Movie>>
+    fun getMovies(searchQuery: String) : LiveData<PagingData<Movie>>
 }

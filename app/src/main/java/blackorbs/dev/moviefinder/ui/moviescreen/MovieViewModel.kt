@@ -20,14 +20,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import blackorbs.dev.moviefinder.repository.MovieRepository
 import blackorbs.dev.moviefinder.models.Movie
 import blackorbs.dev.moviefinder.models.Resource
+import blackorbs.dev.moviefinder.repository.BaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val movieRepo: MovieRepository) : ViewModel() {
+class MovieViewModel @Inject constructor(private val movieRepo: BaseRepository) : ViewModel() {
 
     private val _imdb = MutableLiveData<String>()
     private val _movie = _imdb.switchMap { movieRepo.getMovie(it) }

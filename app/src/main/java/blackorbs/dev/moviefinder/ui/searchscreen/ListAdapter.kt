@@ -19,9 +19,7 @@ package blackorbs.dev.moviefinder.ui.searchscreen
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.text.color
 import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
@@ -41,7 +39,6 @@ class ListAdapter: PagingDataAdapter<Movie, ListAdapter.ViewHolder>(diffCallback
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
     companion object{
-        const val IMDB_KEY = "imdbID"
         val diffCallback = object : ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.imdbID == newItem.imdbID
@@ -59,15 +56,11 @@ class ListAdapter: PagingDataAdapter<Movie, ListAdapter.ViewHolder>(diffCallback
             with(binding){
                 movie?.let {
                     image.load(movie.Poster){
-                        val placeholder = AppCompatResources.getDrawable(root.context,R.drawable.placeholder)
-                        placeholder(placeholder)
-                        error(placeholder)
+                        placeholder(R.drawable.placeholder)
+                        error(R.drawable.placeholder)
                     }
                     root.setOnClickListener {
-                        root.findNavController().navigate(
-                                R.id.action_searchPage_to_moviePage,
-                                bundleOf(IMDB_KEY to movie.imdbID)
-                            )
+                        root.findNavController().navigate(SearchPageDirections.toMoviePage(movie.imdbID))
                     }
                     title.text = SpannableStringBuilder(movie.Title).color(ContextCompat.getColor(root.context, R.color.black_400)){append(" (${movie.Year})")}
                 }
