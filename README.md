@@ -14,6 +14,7 @@ App utilises:
 * Kotlin Coroutine
 * Pagination
 * Clean Architecture Pattern
+* JUnit, Roboelectric and Espresso
 
 #### TODO: Set your OMDb api key in `NetworkModule.kt`:
 ```
